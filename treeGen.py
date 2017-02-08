@@ -5,21 +5,35 @@ import math
 import random
 
 # Ouverture du fichier csv
-with open("iris.csv", "r") as data:
-    reader = csv.DictReader(data, delimiter = ',')
-    headers = reader.fieldnames
-    varNum = len(headers)
-    print(headers)
-    # for i in reader :
-    #     print(i)
+def opendata():
+    with open("bidon.csv", "r") as data:
+        reader = csv.DictReader(data, delimiter=";")
+        headers = reader.fieldnames
+        # print(headers)
+        # for i in reader:
+        #     print(i)
+        return list(reader)
 
-# data doit contenir les donnees a entrer.
-# varNum est le nombre de variables du fichier.
-# opCol est la colonne contenant la réponse pour l'entrainement.
-# def create_tree(data, varNum, opCol):
-#     varNum = math.sqrt(varNum) # Par défaut, l'arbre prend en compte la racine carree du nombre total de variables
+class RandomTree():
+
+    def __init__(self):
+        self._nodesName = list() # Contient le nom des variables sélectionnées à chaque noeud
+        self._condition = list() # Contient la condition de chaque noeud
+        self._individuals = list() # Contient la liste des individus
+        self._variables = list() # Contient la liste des variables
+
+
+def bootstrap(list, proportion):
+    numToTake = int(round(len(list) * proportion, 0))
+    result = []
+    for i in range(1, numToTake, 1):
+        randnum = random.randint(0, len(list)-1)
+        result.append(list[randnum])
+        list.remove(list[randnum])
+    return result
+
+
+
+# reader = opendata()
 #
-#     boostrap = random.randint(1, len(reader))
-#     n = 0
-#     for var in reader.fieldnames:
-#         if n < varNum:
+# print(len(bootstrap(reader, 0.63)))
