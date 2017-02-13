@@ -16,11 +16,29 @@ def opendata():
 
 class RandomTree():
 
-    def __init__(self):
-        self._nodesName = list() # Contient le nom des variables sélectionnées à chaque noeud
-        self._condition = list() # Contient la condition de chaque noeud
-        self._individuals = list() # Contient la liste des individus
-        self._variables = list() # Contient la liste des variables
+    def __init__(self, indiv, vars, tar):
+        self._nodesNames = list() # Contient le nom des variables sélectionnées à chaque noeud
+        self._conditions = list() # Contient la condition de chaque noeud
+        self._individuals = indiv # Contient la liste des individus
+        self._variables = vars # Contient la liste des variables
+        self._target = tar # Pour la construction de l'arbre : détermine la variable cible
+
+    # Getters & setters
+
+    def getNodesNames(self):
+        return self._nodesNames
+
+    def getCondition(self):
+        return self._conditions
+
+    def getIndividuals(self):
+        return self._individuals
+
+    def getVariables(self):
+        return self._variables
+
+    # Methods
+
 
 
 def bootstrap(list, proportion):
@@ -32,8 +50,14 @@ def bootstrap(list, proportion):
         list.remove(list[randnum])
     return result
 
+def columnNames(data):
+    names = data[1].keys()
+    return list(names)
 
 
-# reader = opendata()
-#
-# print(len(bootstrap(reader, 0.63)))
+
+
+# Test de la construction d'un arbre.
+reader = opendata()
+
+tree = RandomTree(bootstrap(reader, 0.63), columnNames(reader), "sexe")
